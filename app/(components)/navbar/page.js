@@ -2,19 +2,20 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto">
-        <div className="flex justify-between items-center">
-          <div className="text-white text-xl font-semibold">Api APP</div>
-          <div className="hidden md:flex space-x-4">
-            <Link href="#" className="text-white hover:text-gray-200">Home</Link>
-            <Link href="about" className="text-white hover:text-gray-200">About</Link>
-            <Link href="services" className="text-white hover:text-gray-200">Services</Link>
-            <Link href="contact" className="text-white hover:text-gray-200">Contact</Link>
-          </div>
-        </div>
+<div className="container-fluid bg-primary text-white p-4 col-sm-12 ">
+  <div className="container">
+    <div className="row">
+      <div className="col-4 fs-2">Api App </div>
+      <div className="col-4"></div>
+      <div className="col-4">
+      <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+      <button class="btn btn-outline-success bg-info" type="submit">Search</button>
+    </form>
       </div>
-    </nav>
+    </div>
+  </div>
+</div>
   );
 };
 
