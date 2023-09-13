@@ -1,10 +1,9 @@
-import Link from "next/link";
 
 const Navbar = () => {
   return (
-<div className="container-fluid bg-primary text-white p-4 col-sm-12 ">
-  <div className="container">
-    <div className="row">
+<div className="container-fluid text-white bg-info">
+   <div className="container col-12 col-md-danger col-sm-warning col-lg-success">
+   <div className="row">
       <div className="col-4 fs-2">Api App </div>
       <div className="col-4"></div>
       <div className="col-4">
@@ -14,8 +13,8 @@ const Navbar = () => {
     </form>
       </div>
     </div>
+   </div>
   </div>
-</div>
   );
 };
 

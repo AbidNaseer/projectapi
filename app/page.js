@@ -1,50 +1,65 @@
 "use client"
-import { useState } from "react"
+import { useState } from "react";
+import axios from "axios";
 import Card from "./(components)/card/page";
-import axios from 'axios';
+
 
 function home() {
-  const [data, setData] = useState([])
-  const loadDataFromServer = async () => {
-    let response = await axios.get('https://api.github.com/users/naveed-rana/followers')
-    setData(response.data)
-    console.log("response", response.data)
+  const [userName, setUserName] = useState(null)
+  const [followers, setFollowers] = useState([])
+  const [data, setData] = useState(null)
+  
+  const onChangeHandler = (e) => {
+      setUserName(e.target.value)
   }
-  const removeData = () => {
-    console.log("its working")
-  }
-  return (
-    <div className="container-fluid mt-4 text-center">
-      <div className="container">
-        <div className="row">
-          <div className="col-2">
-          <button class="btn btn-outline-success bg-primary" onClick={loadDataFromServer}>Show data</button>
-          </div>
-          <div className="col-10">
+  const onClickHandler =async () => {
 
-            {data.map((item ,index) => {
-              return (
-                <div className="container-fluid ">
-                  <div className="container text-center">
-                    <div className="row">
-                      <div className="col-2"></div>
-                      <div className="col-10">
-                      <div key={index} className="col-xs-12 col-sm-6 col-md-4 col-lg-3 sm-bg-red">
-                  <Card title={item.login}  url={item.url} />
-                </ div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+      setFollowers([])
+      let response = await fetch(`https://api.github.com/users/${userName}`)
+        response = await response.json()
+        setData(response)
+        console.log(response);
+
+
+  }
+  const onFollowerHandler = async () => {
+      let response = await axios.get(data.followers_url ,{next :{revalidate:3000}})
+      console.log("response", response.data );
+      setFollowers(response.data)
+
+  }
+return(
+  <div>
+    <div className="container">
+      <div className="row">
+        <div className="col-3"></div>
+        <div className="col-6">
           
+          <input type="text" placeholder="Search here" onChange={onChangeHandler} />
+          <button className="btn btn-success" onClick={onClickHandler}> search </button>
         </div>
+        <div className="col-3"></div>
       </div>
     </div>
+{data &&
+            
+            <Card src={data.avatar_url} bio={data.login} handler={onFollowerHandler} />
+            }
 
-  )
+{followers.length >= 1 &&
+
+
+<>   
+    {followers.map((element) => {
+        return (
+          <Card title={ element.login} src={element.avatar_url} /> 
+        )
+      })}
+
+</>
+}
+  </div>
+)
 }
 
 export default home
